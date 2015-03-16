@@ -2,9 +2,10 @@
 
 var path = require("path");
 var fs = require("fs");
-var sprintf = require("sprintf-js").sprintf;
+var child_process = require('child_process');
 
-//var mm = require('musicmetadata');
+var sleep = require('sleep').sleep;
+var sprintf = require("sprintf-js").sprintf;
 var ffmpeg = require('fluent-ffmpeg');
 
 var METADATA_FILE = "metadata.json";
@@ -51,6 +52,11 @@ function parseCmdLine() {
 
 		extractRandomFragments(lastArg);
 
+	//---  undocumented commands
+	} else if (cmdArgs.cmd === "test-playback") {
+		randomPlayback(15);
+
+	//---  failed commands
 	} else if (cmdArgs.cmd === "missingCommand") {
 		console.error("Missing command");
 		printHelp();
@@ -155,7 +161,7 @@ function isAnalyzeMetadataComplete() {
  */
 function extractRandomFragments(rootDir, fragmentRate, fragmentSize) {
 	fragmentRate = (typeof fragmentRate !== 'undefined' ? fragmentRate : 3600);
-	fragmentSize = (typeof fragmentSize !== 'undefined' ? fragmentSize : 30);
+	fragmentSize = (typeof fragmentSize !== 'undefined' ? fragmentSize : 15);
 
 	parseMetadataFile(rootDir);
 
@@ -220,6 +226,27 @@ function createFragment(inputPath, outputPath, metadata, relStartPosition, size)
 
 }
 
+
+function randomPlayback(avgSleep, deltaSleep) {
+	avgSleep = (typeof avgSleep !== 'undefined' ? avgSleep : 3*3600); //in secs
+	deltaSleep = (typeof deltaSleep !== 'undefined' ? deltaSleep : (avgSleep/2) );
+
+	while (true) {
+		//randomize sleep
+		var sleepTime = Math.floor(Math.random() * deltaSleep + avgSleep - (deltaSleep/2));
+//		var sleepTime = 5;
+		console.info("Sleeping for [" + sleepTime + "] seconds");
+		sleep(sleepTime);
+
+		//cmd line: cvlc xyz.mp3
+		filename = "fart-01.mp3";
+		console.info("Now playing [" + filename + "]");
+		child_process.exec("cvlc " + path.dirname(process.argv[1]) + "/" + filename, function(error, stdout, stderr) {
+			console.log(stdout);
+		});
+		console.info("File playing");
+	}
+}
 
 //-----------------------------
 // Utility functions
