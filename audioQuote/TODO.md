@@ -4,11 +4,11 @@ TODO
 v trovare files public domain
 x download
 v selective syncing dropbox
-- progetto github
-- sorteggio porzione casuale
+v progetto github
+v sorteggio porzione casuale
 - salvataggio su filesystem:
-	- metadati
-	- estrazione audio 
+	v metadati
+	v estrazione audio 
 
 - playback audio
 - scheduler random

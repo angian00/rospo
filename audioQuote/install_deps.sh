@@ -9,6 +9,6 @@ rm -rf  `dirname $0`/node_modules
 npm install minimist
 
 npm install fluent-ffmpeg
-#or...
-#npm install musicmetadata
+#npm install musicmetadata #obsoleted
 
+npm install sprintf-js
