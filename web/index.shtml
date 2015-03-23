@@ -1,0 +1,14 @@
+<!-- TODO: set var -->
+<!--#include "header.html" -->
+
+<div class="inner cover">
+<!--img src="logo_old.png" width="320" height="240" /-->
+<img src="logo.png" width="240" />
+<h1 class="cover-heading">Progetto ROSPO</h1>
+<p class="lead">Esperimenti di <a href="https://github.com/angian00">angian</a> con <a href="http://www.raspberrypi.org/">Raspberry Pi</a></p>
+<p class="lead">
+  <a href="admin.shtml" class="btn btn-lg btn-default">Stato del sistema</a>
+</p>
+</div>
+
+<!--#include "footer.html" -->

@@ -1,0 +1,17 @@
+<!-- TODO: set var -->
+<!--#include "header.html" -->
+
+<div>
+<h2>Altre info</h2>
+<!--ul>
+	<li>Resilient</li>
+	<li>Obnoxious</li>
+	<li>Supervising</li>
+	<li>Platform</li>
+	<li>Observer</li>
+</ul-->
+<p>ROSPO è un acronimo, sta per Resilient Obnoxious Supervising Platform Observer.</p>
+
+</div>
+
+<!--#include "footer.html" -->

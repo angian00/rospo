@@ -1,0 +1,24 @@
+{
+  "name": "audioQuote",
+  "version": "1.0.0",
+  "description": "Estrazione di citazioni casuali da audiolibri",
+  "main": "audioQuote.js",
+  "dependencies": {
+    "fluent-ffmpeg": "^2.0.0-rc3",
+    "minimist": "^1.1.1",
+//    "musicmetadata": "^1.0.0",
+    "sleep": "^2.0.0",
+    "sprintf-js": "^1.0.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "audio",
+    "random",
+    "quotes"
+  ],
+  "author": "angian00",
+  "license": "ISC"
+}

@@ -9,10 +9,15 @@ v sorteggio porzione casuale
 	v metadati
 	v estrazione audio 
 
+- provare modo strict
+- debugging random fragment
+
+v organizzare directory frammenti
+v organizzare dipendenze con package.json
 
 - playback audio:
 	v base
-	- aggiungere tts
-		wget -q -U Mozilla "http://translate.google.com/translate_tts?tl=en&q=Hello" -O hello.mp3
+	+ aggiungere tts metadati (posizione)
+		wget -q -U Mozilla "http://translate.google.com/translate_tts?tl=it&q=prova" -O prova.mp3
 
-- scheduler random
+v scheduler random

@@ -1,6 +1,12 @@
 # TODO
 - upload sketch architettura
 
+- pagine web
+	- favicon
+
+- config Apache
+- script di deploy
+
 - console admin
 - grafici
 - comandi
@@ -40,8 +46,19 @@
 - logo
 - interfacciamento sguard?
 - interazione sensori/attuatori
+- azionamento rele'
+
+## Idee progetti
+
 + pollution monitoring
 + citazioni audiolibri random
 + Gandini-detector
++ fart generator
++ lettore di tweet
+++ robot di telepresenza
+++ installazioni steampunk:
+	- quadrante a lancette
++ controllo acqua piante
++ microfono remoto da polso
 
 

@@ -10,3 +10,6 @@ Lanciarlo senza argomenti per ottenere un breve messaggio di help.
 Il materiale audio originale e' preso da LibriVox (https://librivox.org).
 
 
+Architettura:
+!(audioQuote_architecture.png)
+

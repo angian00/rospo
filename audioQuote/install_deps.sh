@@ -3,13 +3,15 @@
 
 rm -rf  `dirname $0`/node_modules
 
-npm install minimist
 
 apt-get install ffmpeg
-npm install fluent-ffmpeg
-#npm install musicmetadata #obsoleted
 
-npm install sprintf-js
-npm install sleep
+npm install
+#npm install fluent-ffmpeg
+#npm install minimist
+#npm install sprintf-js
+#npm install sleep
+
+##npm install musicmetadata #obsolete
 
 apt-get install vlc
