@@ -1,5 +1,5 @@
 <!-- TODO: set var -->
-<!--#include "header.html" -->
+<!--#include virtual="header.html" -->
 
 <div>
 <h2>Altre info</h2>
@@ -14,4 +14,4 @@
 
 </div>
 
-<!--#include "footer.html" -->
+<!--#include virtual="footer.html" -->

@@ -1,23 +1,10 @@
 TODO
 =======
 
-v trovare files public domain
-x download
-v progetto github
-v sorteggio porzione casuale
-- salvataggio su filesystem:
-	v metadati
-	v estrazione audio 
+- download manuale audiolibri
+- fading in apertura e chiusura frammenti:
+	- ffmpeg -y -i /home/user/video/test/sound.mp3 -af "afade=t=in:ss=0:d=3,afade=t=out:st=7:d=3,afade=t=in:st=10:d=3,afade=t=out:st=17:d=3,afade=t=in:st=20:d=3,afade=t=out:st=27:d=3" /tmp/test.mp3
+	- volume filters
 
-- provare modo strict
-- debugging random fragment
-
-v organizzare directory frammenti
-v organizzare dipendenze con package.json
-
-- playback audio:
-	v base
-	+ aggiungere tts metadati (posizione)
+- playback audio: aggiungere tts metadati (posizione)
 		wget -q -U Mozilla "http://translate.google.com/translate_tts?tl=it&q=prova" -O prova.mp3
-
-v scheduler random

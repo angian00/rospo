@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+"use strict";
+
 var path = require("path");
 var fs = require("fs");
 var child_process = require('child_process');
@@ -10,8 +12,9 @@ var ffmpeg = require('fluent-ffmpeg');
 
 
 var METADATA_FILE = "metadata.json";
-var	rootFullDir = process.cwd() + "/full_works";
-var	rootFragmentDir = process.cwd() + "/fragments";
+var	prjDir = path.dirname(process.argv[1]);
+var	rootFullDir = prjDir + "/full_works";
+var	rootFragmentDir = prjDir + "/fragments";
 
 
 main();
@@ -40,23 +43,29 @@ function parseCmdLine() {
 
 	} else if (cmdArgs.cmd === "analyze") {
 		if (lastArg == null) {
-			lastArg = getFirstSubDir(rootFullDir);
-			console.warn("Directory not specified, using " + lastArg);
-		}
-
-		analyzeDir(lastArg);
+			analyzeAll(false);
+			//console.warn("Directory not specified, defaulting to all");
+		} else
+			analyzeDir(lastArg);
 
 	} else if (cmdArgs.cmd === "extract") {
 		if (lastArg == null) {
-			lastArg = getFirstSubDir(rootFullDir);
-			console.warn("Directory not specified, using " + lastArg);
-		}
+			extractAll(true);
+			//console.warn("Directory not specified, defaulting to all");
+		} else
+			extractDir(lastArg);
 
-		extractRandomFragments(lastArg);
+	} else if (cmdArgs.cmd === "playback") {
+		randomPlayback(60*60*4);
+
 
 	//---  undocumented commands
 	} else if (cmdArgs.cmd === "test-playback") {
-		randomPlayback(15);
+		randomPlayback(30);
+
+	} else if (cmdArgs.cmd === "test-random") {
+		randomPlayback(-1, -1, true);
+
 
 	//---  failed commands
 	} else if (cmdArgs.cmd === "missingCommand") {
@@ -82,20 +91,15 @@ function downloadAll(baseUrl) {
 function analyzeAll(force) {
 	fs.readdirSync(rootFullDir).forEach(function(dirname, index) {
 		var subdir = rootFullDir + "/" + dirname;
-		var fstat = fs.statSync(subdir);
-		if (fstat.isDirectory()) {
-			var metadataFilePath = TODO;
-			var isMetadataCurrent = TODO;
-			if (force || (!isMetadataCurrent))
-				analyzeDir(subdir);
-		}
+		var dstat = fs.statSync(subdir);
+		if (dstat.isDirectory() && (!isMetadataCurrent(subdir) || force))
+			analyzeDir(subdir);
 	});
 }
 
 function analyzeDir(inputDir) {
 	var nMetadataFiles = 0;
 	var metadataRecords = [];
-
 
 	function analyzeMetadataFfmpeg(filename, finalCallback) {
 		//command line: ffmpeg -i
@@ -153,25 +157,40 @@ function analyzeDir(inputDir) {
 					console.info("written metadata file");
 				});
 
-				console.info("analyzed file " + filename);
+				console.info("analyzing file " + filename);
 			}
 		});
+	});
+}
+
+function extractAll(force) {
+	fs.readdirSync(rootFullDir).forEach(function(dirname, index) {
+		var inputDir = rootFullDir + "/" + dirname;
+		if (!fs.statSync(inputDir).isDirectory())
+			return;
+
+		var targetDir = rootFragmentDir + "/" + dirname;
+		if ((!fs.existsSync(targetDir)) || (!isMetadataCurrent(targetDir)) || force)
+			extractDir(inputDir);
 	});
 }
 
 /**
  * fragmentRate: generate a fragment every fragmentRate seconds of total duration.
  */
-function extractRandomFragments(inputDir, fragmentRate, fragmentSize) {
+function extractDir(inputDir, fragmentRate, fragmentSize) {
 	fragmentRate = (typeof fragmentRate !== 'undefined' ? fragmentRate : 3600);
 	fragmentSize = (typeof fragmentSize !== 'undefined' ? fragmentSize : 15);
 
-	var inputMetadataFile = inputDir + "/" + METADATA_FILE;
-	var inputMetadata = parseMetadataFile(inputMetadataFile);
+	if (!isMetadataCurrent(inputDir)) {
+		analyzeDir(inputDir);
+	}
+
+	var inputMetadata = parseMetadataFile(inputDir);
 
 	//compute totDuration
 	var totDuration = 0; //in secs
-	for (i in inputMetadata) {
+	for (var i in inputMetadata) {
 		totDuration += inputMetadata[i].duration;
 	}
 
@@ -181,23 +200,24 @@ function extractRandomFragments(inputDir, fragmentRate, fragmentSize) {
 
 	//compute fragment position
 	var MAX_FRAGMENT_TRIES = 10;
+	var relStartPosition = null;
 	var nFragments = Math.floor(totDuration / fragmentRate);
 	console.info("nFragments: " + nFragments);
 	for (var iFragment=0; iFragment < nFragments; iFragment++) {
 		var nTries = 0;
 		do {
-			startPosition = Math.random() * totDuration;
-			endPosition = startPosition + fragmentSize;
-			res = findItem(inputMetadata, "duration", startPosition);
-			startIndex = res[0];
+			var startPosition = Math.random() * totDuration;
+			var endPosition = startPosition + fragmentSize;
+			var res = findItem(inputMetadata, "duration", startPosition);
+			var startIndex = res[0];
 			relStartPosition = res[1];
 			res = findItem(inputMetadata, "duration", endPosition);
-			endIndex = res[0];
-			relEndPosition = res[1];
+			var endIndex = res[0];
+			var relEndPosition = res[1];
 
 			//console.log("nTries: " + nTries + ", startIndex: " + startIndex + ", endIndex: " + endIndex);
 
-			ok = (startIndex == endIndex);
+			var ok = (startIndex == endIndex);
 			nTries ++;
 
 		} while ((!ok) && (nTries < MAX_FRAGMENT_TRIES));
@@ -215,20 +235,20 @@ function extractRandomFragments(inputDir, fragmentRate, fragmentSize) {
 	var outputMetadataPath = outputDir + "/" + METADATA_FILE;
 	var outputMetadataStream = fs.createWriteStream(outputMetadataPath);
 
+	console.info("Writing metadata file " + outputMetadataPath);
 	for (iFragment in outputMetadata) {
-		outputMetadataRecord = outputMetadata[iFragment];
 		//console.info("filename: "+filename);
-		outputMetadataStream.write(JSON.stringify(outputMetadataRecord) + "\n");
+		outputMetadataStream.write(JSON.stringify(outputMetadata[iFragment]) + "\n");
 	}
 	outputMetadataStream.end();
-	console.info("Written metadata file " + outputMetadataPath);
 }
 
-function parseMetadataFile(metadataFilePath) {
+function parseMetadataFile(inputDir) {
+	var metadataFilePath = inputDir + "/" + METADATA_FILE;
 	var metadataRecords = [];
 	var lines = fs.readFileSync(metadataFilePath).toString().split("\n");
-	for (i in lines) {
-		line = lines[i].trim();
+	for (var i in lines) {
+		var line = lines[i].trim();
 		if (line !== "")
 			metadataRecords.push(JSON.parse(line));
 	}
@@ -244,7 +264,7 @@ function createFragment(inputPath, outputPath, inputMetadata, startPosition, siz
 
 	var outputMetadata = {};
 	outputMetadata.filePath = outputPath;
-	outputMetadata.startPosition = relStartPosition;
+	outputMetadata.startPosition = startPosition;
 	outputMetadata.duration = size;
 	outputMetadata.title = inputMetadata.title;
 	outputMetadata.artist = inputMetadata.artist;  
@@ -255,23 +275,28 @@ function createFragment(inputPath, outputPath, inputMetadata, startPosition, siz
 }
 
 
-function randomPlayback(avgSleep, deltaSleep) {
+function randomPlayback(avgSleep, deltaSleep, dryRun) {
 	avgSleep = (typeof avgSleep !== 'undefined' ? avgSleep : 3*3600); //in secs
 	deltaSleep = (typeof deltaSleep !== 'undefined' ? deltaSleep : (avgSleep/2) );
+	dryRun = (typeof dryRun !== 'undefined' ? dryRun : false );
 
 	while (true) {
+		//cmd line: cvlc xyz.mp3
+		var fragmentMetadataItem = chooseRandomFragment();
+		console.info("Now playing [" + fragmentMetadataItem.title + "]");
+		if (dryRun) {
+			sleep(1);
+			continue;
+		}
+
+		child_process.exec("cvlc " + fragmentMetadataItem.filePath, function(error, stdout, stderr) {
+			console.log(stdout);
+		});
+
 		//randomize sleep
 		var sleepTime = Math.floor(Math.random() * deltaSleep + avgSleep - (deltaSleep/2));
 		console.info("Sleeping for [" + sleepTime + "] seconds");
 		sleep(sleepTime);
-
-		//cmd line: cvlc xyz.mp3
-		mp3Path = chooseRandomFragment();
-		console.info("Now playing [" + mp3Path + "]");
-		child_process.exec("cvlc " + mp3Path, function(error, stdout, stderr) {
-			console.log(stdout);
-		});
-		console.info("File played");
 	}
 }
 
@@ -282,7 +307,6 @@ function chooseRandomFragment() {
 	var fragmentMetadata = readFragmentMetadata();
 	var iFragment = Math.floor(Math.random() * fragmentMetadata.length);
 
-	//return {path: "fart-01.mp3"};
 	return fragmentMetadata[iFragment];
 }
 
@@ -293,7 +317,7 @@ function readFragmentMetadata() {
 		var subdir = rootFragmentDir + "/" + dirname;
 		var fstat = fs.statSync(subdir);
 		if (fstat.isDirectory())
-			fragmentMetadata.append(parseMetadata(subdir));
+			fragmentMetadata = fragmentMetadata.concat(parseMetadataFile(subdir));
 	});
 
 	return fragmentMetadata;
@@ -324,9 +348,9 @@ function endsWith(str, suffix) {
 
 function findItem(records, fieldName, absPos) {
 	var currTot = 0;
-	for (i in records) {
-		currRecord = records[i];
-		nextTot = currTot + currRecord[fieldName];
+	for (var i in records) {
+		var currRecord = records[i];
+		var nextTot = currTot + currRecord[fieldName];
 
 		if (absPos < nextTot)
 			return [i, absPos - currTot];
@@ -366,3 +390,8 @@ function resetDir(targetDir) {
   	}
 }
 
+function isMetadataCurrent(targetDir) {
+	var dstat = fs.statSync(targetDir);
+	var metadataFilePath = targetDir + "/" + METADATA_FILE;
+	return fs.existsSync(metadataFilePath) && (dstat.mtime <= fs.statSync(metadataFilePath).mtime);	
+}

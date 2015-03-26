@@ -1,0 +1,24 @@
+<!-- TODO: set var -->
+<!--#include virtual="header.html" -->
+
+<div>
+	<h1>Stato del sistema</h1>
+
+	<table class="table table-condensed borderless">
+		<!--thead>
+	        <tr><th>Subsystem</th><th>Status</th></tr>
+	    </thead-->
+	    <tbody>
+	        <tr><th colspan="2">Plain</th></tr>
+			<tr><td>statusMonitor</td><td>ok</td></tr>
+			<tr><td>audioQuote</td><td>ko</td></tr>
+
+	        <tr><th colspan="2">Con glyphicon</th></tr>
+			<tr><td>statusMonitor</td><td><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></td></tr>
+			<tr><td>audioQuote</td><td><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></td></tr>
+		<tbody>
+	</table>
+
+</div>
+
+<!--#include virtual="footer.html" -->

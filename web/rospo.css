@@ -164,3 +164,24 @@ body {
     width: 700px;
   }
 }
+
+
+/*
+ * Borderless table
+ */
+
+.borderless tbody tr td, .borderless tbody tr th, .borderless thead tr th {
+    border: none;
+}
+
+
+/*
+ * Icon coloring
+ */
+.glyphicon-ok {
+  color: #0f0;
+}
+
+.glyphicon-remove {
+  color: #f00;
+}

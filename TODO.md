@@ -27,7 +27,7 @@
 ## Milestones
 
 ### v0.0
-- Acquisto Raspberry
+v Acquisto Raspberry
 - Interfacciamento ssh (e video ?)
 - Installazione pacchetti base
 
@@ -43,7 +43,7 @@
 
 
 ### v0.x
-- logo
+v logo
 - interfacciamento sguard?
 - interazione sensori/attuatori
 - azionamento rele'

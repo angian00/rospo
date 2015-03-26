@@ -1,0 +1,67 @@
+<html lang="it">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- boh -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Progetto ROSPO - home page</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+	<!-- Optional theme -->
+	<!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css"-->
+
+	<link href="rospo.css" rel="stylesheet">
+</head>
+
+<!--body style="background: url(logo.png) no-repeat center center fixed; "-->
+    <div class="site-wrapper">
+
+      <div class="site-wrapper-inner">
+
+        <div class="cover-container">
+
+          <div class="masthead clearfix">
+            <div class="inner">
+              <!--h3 class="masthead-brand">TODO</h3-->
+              <nav>
+                <ul class="nav masthead-nav">
+                  <li class="active"><a href="#">Home</a></li>
+                  <li><a href="info.html">Info</a></li>
+                  <li><a href="audioQuote.html">audioQuote</a></li>
+                  <li><a href="idee.html">Altre idee</a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+
+          <div class="inner cover">
+			<!--img src="logo_old.png" width="320" height="240" /-->
+			<img src="logo.png" width="320" height="240" />
+            <h1 class="cover-heading">Progetto ROSPO</h1>
+            <p class="lead">Esperimenti di <a href="https://github.com/angian00">angian</a> con <a href="http://www.raspberrypi.org/">Raspberry Pi</a></p>
+            <p class="lead">
+              <a href="#TODO" class="btn btn-lg btn-default">Altre informazioni</a>
+            </p>
+          </div>
+
+          <div class="mastfoot">
+            <div class="inner">
+              <p>Powered by <a href="http://www.raspberrypi.org/"><img src="http://www.raspberrypi.org/wp-content/uploads/2012/03/Raspi_Colour_R-207x250.png" width="20" height="20" alt="Raspberry Pi Logo"/></a></p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+	 <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script-->
+</body>
+
+</html>
