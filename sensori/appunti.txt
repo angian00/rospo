@@ -1,0 +1,24 @@
+## Diario attività
+
+### Led RGB
+
+- Come primo esercizio realizziamo lo sketch in cui il led RGB emette una luce verde che si accende e spegne gradualmente, i restanti colori non verranno visualizzati.
+
+- una sequenza di accensione e spegnimento dei verde del rosso e del blu
+
+- una variazione continua e graduale: da verde a rosso, da blu a verde, da rosso a blu
+
+
+Specifiche LED colorati:
+http://www.maffucci.it/wp-content/uploads/2014/09/arduino-led-rgb-05.jpg
+
+Rrosso = (5 - 2) / 20mA = 150 ohm
+Rverde,blu = (5 - 3.5) / 20mA = 75 ohm
+
+(In realta' i nostri LED gia' integrano le resistenze)
+
+Per PWM:
+http://sourceforge.net/p/raspberry-gpio-python/wiki/PWM/
+
+ ! RPIO e' obsoleto
+ ! altre librerie hanno solo interfacce C
