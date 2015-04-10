@@ -1,0 +1,11 @@
+<!--#include virtual="header.html" -->
+
+<div>
+<h2>Esecuzione script di test</h2>
+Esito:
+<p>[<!--#exec cmd="$DOCUMENT_ROOT/rospo/test.py" -->]</p>
+
+
+</div>
+
+<!--#include virtual="footer.html" -->

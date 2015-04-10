@@ -58,13 +58,16 @@ function parseCmdLine() {
 	} else if (cmdArgs.cmd === "playback") {
 		randomPlayback(60*60*4);
 
+	} else if (cmdArgs.cmd === "fart") {
+		randomPlayback(60*60*1, null, null, prjDir + "/farts");
+
 
 	//---  undocumented commands
 	} else if (cmdArgs.cmd === "test-playback") {
 		randomPlayback(30);
 
 	} else if (cmdArgs.cmd === "test-random") {
-		randomPlayback(-1, -1, true);
+		randomPlayback(null, null, true);
 
 
 	//---  failed commands
@@ -81,7 +84,7 @@ function parseCmdLine() {
 function printHelp() {
 	console.info(" Usage:");
 	console.info("\t " + process.argv[0] + " " + process.argv[1] + " -c <command> ...");
-	console.info(" where <command> = [ download | analyze | extract ]");
+	console.info(" where <command> = [ download | analyze | extract | playback | fart ]");
 }
 
 function downloadAll(baseUrl) {
@@ -275,14 +278,15 @@ function createFragment(inputPath, outputPath, inputMetadata, startPosition, siz
 }
 
 
-function randomPlayback(avgSleep, deltaSleep, dryRun) {
+function randomPlayback(avgSleep, deltaSleep, dryRun, rootInputDir) {
 	avgSleep = (typeof avgSleep !== 'undefined' ? avgSleep : 3*3600); //in secs
 	deltaSleep = (typeof deltaSleep !== 'undefined' ? deltaSleep : (avgSleep/2) );
 	dryRun = (typeof dryRun !== 'undefined' ? dryRun : false );
+	rootInputDir = (typeof rootInputDir !== 'undefined' ? rootInputDir : rootFragmentDir );
 
 	while (true) {
 		//cmd line: cvlc xyz.mp3
-		var fragmentMetadataItem = chooseRandomFragment();
+		var fragmentMetadataItem = chooseRandomFragment(rootInputDir);
 		console.info("Now playing [" + fragmentMetadataItem.title + "]");
 		if (dryRun) {
 			sleep(1);
@@ -303,18 +307,18 @@ function randomPlayback(avgSleep, deltaSleep, dryRun) {
 /**
  * Among all files
  */
-function chooseRandomFragment() {
-	var fragmentMetadata = readFragmentMetadata();
+function chooseRandomFragment(rootInputDir) {
+	var fragmentMetadata = readFragmentMetadata(rootInputDir);
 	var iFragment = Math.floor(Math.random() * fragmentMetadata.length);
 
 	return fragmentMetadata[iFragment];
 }
 
-function readFragmentMetadata() {
+function readFragmentMetadata(rootInputDir) {
 	var fragmentMetadata = [];
 
-	fs.readdirSync(rootFragmentDir).forEach(function(dirname, index) {
-		var subdir = rootFragmentDir + "/" + dirname;
+	fs.readdirSync(rootInputDir).forEach(function(dirname, index) {
+		var subdir = rootInputDir + "/" + dirname;
 		var fstat = fs.statSync(subdir);
 		if (fstat.isDirectory())
 			fragmentMetadata = fragmentMetadata.concat(parseMetadataFile(subdir));

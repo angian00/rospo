@@ -1,13 +1,9 @@
 # TODO
-- upload sketch architettura
 
 - pagine web
 	- favicon
+   - whitelist ip
 
-- config Apache
-- script di deploy
-
-- console admin
 - grafici
 - comandi
 - altre vis.
@@ -18,47 +14,44 @@
    - temperatura
 
 - attuatori
-   - frasi registrate
-   - rumori
    - lampadine
    - schermo
 
 
 ## Milestones
 
-### v0.0
-v Acquisto Raspberry
-- Interfacciamento ssh (e video ?)
-- Installazione pacchetti base
-
 ### v0.1
-- Pubblicazione POST random
-- Interfacciamento sensore base
-- Visualizzazioni base
+- interfacciarsi PiFace
+- collegare LED esterno
+- aggiungere stato input digitali a admin console
+
 
 ### v0.2
-- Console admin
-- Architettura comandi
-- Primo attuatore
+- collegare sensore esterno
 
 
 ### v0.x
-v logo
-- interfacciamento sguard?
 - interazione sensori/attuatori
 - azionamento rele'
 
-## Idee progetti
 
-+ pollution monitoring
-+ citazioni audiolibri random
-+ Gandini-detector
-+ fart generator
+## Idee progetti
+- batteria di led es. "perc. occupazione disco"
 + lettore di tweet
-++ robot di telepresenza
++ pollution monitoring
++ Gandini-detector
+++ stazione di telepresenza
+   - GoPiGo
+   - camera
+   - speakers
 ++ installazioni steampunk:
 	- quadrante a lancette
 + controllo acqua piante
 + microfono remoto da polso
 
 
+## Lista spesa
+- jumper wire
+? PCB
+- transistor
+- sensori

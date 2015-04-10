@@ -4,21 +4,31 @@
 <div>
 	<h1>Stato del sistema</h1>
 
+	<p><em>30/03/2015 12:08</em></p>
+
+	<h2>Input</h2>
 	<table class="table table-condensed borderless">
 		<!--thead>
 	        <tr><th>Subsystem</th><th>Status</th></tr>
 	    </thead-->
 	    <tbody>
-	        <tr><th colspan="2">Plain</th></tr>
-			<tr><td>statusMonitor</td><td>ok</td></tr>
-			<tr><td>audioQuote</td><td>ko</td></tr>
-
-	        <tr><th colspan="2">Con glyphicon</th></tr>
 			<tr><td>statusMonitor</td><td><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></td></tr>
 			<tr><td>audioQuote</td><td><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></td></tr>
+			<tr><td>farter</td><td><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></td></tr>
 		<tbody>
 	</table>
 
+	<h2>Applicazioni</h2>
+	<table class="table table-condensed borderless">
+		<!--thead>
+	        <tr><th>Subsystem</th><th>Status</th></tr>
+	    </thead-->
+	    <tbody>
+			<tr><td>statusMonitor</td><td><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></td></tr>
+			<tr><td>audioQuote</td><td><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></td></tr>
+			<tr><td>farter</td><td><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></td></tr>
+		<tbody>
+	</table>
 </div>
 
 <!--#include virtual="footer.html" -->

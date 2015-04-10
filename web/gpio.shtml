@@ -1,0 +1,39 @@
+<!-- TODO: set var -->
+<!--#include virtual="header.html" -->
+
+<div>
+	<h1>GPIO (General Purpose I/O)</h1>
+	<h2>General Purpose I/O</h2>
+
+	<p><em>30/03/2015 12:08</em></p>
+
+	<form>
+		<table class="table table-condensed borderless centered">
+			<thead>
+		        <tr><th>PIN</th><th>Current Status</th><th>New Status</th></tr>
+		    </thead>
+		    <tbody>
+				<tr>
+					<td><b>0</b></td>
+					<td>on</td>
+					<td>
+						<label class="radio-inline"><input type="radio" name="out_0">on</label>
+						<label class="radio-inline"><input type="radio" name="out_0">off</label>	
+					</td>
+				</tr>
+
+				<tr><td><b>1</b></td><td><span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span></td></tr>
+				<tr><td>2</td><td>&#9679;</td></tr>
+				<tr><td>3</td><td>&#9675;</td></tr>
+				<tr><td>4</td><td>&#9677;</td></tr>
+				<tr><td>5</td><td><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span></td></tr>
+				<tr><td>6</td><td>&#9711;</td></tr>
+				<tr><td>7</td><td>&#11093;</td></tr>
+				<tr><td></td><td></td><td><input type="button">Update</input></td></tr>
+			<tbody>
+		</table>
+	</form>
+
+</div>
+
+<!--#include virtual="footer.html" -->

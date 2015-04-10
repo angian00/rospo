@@ -1,0 +1,13 @@
+<!-- TODO: set var -->
+<!--#include virtual="header.html" -->
+
+<div>
+<h1>audioQuote</h1>
+
+<p>Estrazione di citazioni casuali da audiolibri.</p>
+
+<p>Il materiale audio originale e' preso da LibriVox (https://librivox.org).</p>
+
+</div>
+
+<!--#include virtual="footer.html" -->

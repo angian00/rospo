@@ -1,4 +1,4 @@
-/*
+
  * Globals
  */
 
@@ -178,10 +178,12 @@ body {
 /*
  * Icon coloring
  */
-.glyphicon-ok {
-  color: #0f0;
-}
+.glyphicon-ok { color: #0f0; }
+.glyphicon-remove { color: #f00; }
+.glyphicon-wrench { color: #e8a12a; }
 
-.glyphicon-remove {
-  color: #f00;
-}
+.glyphicon-question-sign { color: #9999ff; }
+
+
+.glyphicon-ok-sign { color: #0f0; }
+.glyphicon-remove-sign { /* default color */ }
