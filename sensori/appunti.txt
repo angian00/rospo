@@ -15,10 +15,9 @@ http://www.maffucci.it/wp-content/uploads/2014/09/arduino-led-rgb-05.jpg
 Rrosso = (5 - 2) / 20mA = 150 ohm
 Rverde,blu = (5 - 3.5) / 20mA = 75 ohm
 
-(In realta' i nostri LED gia' integrano le resistenze)
+(In realta' i nostri LED gia' integrano le resistenze per una tensione di 5V)
 
-Per PWM:
+Il PWM software e' stato introdotto nelle ultime release della libreria ufficiale Python :
 http://sourceforge.net/p/raspberry-gpio-python/wiki/PWM/
 
- ! RPIO e' obsoleto
- ! altre librerie hanno solo interfacce C
+ 

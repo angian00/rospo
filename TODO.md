@@ -4,14 +4,14 @@
 	- favicon
    - whitelist ip
 
-- grafici
 - comandi
 - altre vis.
 
 - sensori
    - microfono/vibrazione
    - carico elettrico
-   - temperatura
+   - range finder
+      http://www.modmypi.com/blog/hc-sr04-ultrasonic-range-sensor-on-the-raspberry-pi
 
 - attuatori
    - lampadine
@@ -21,13 +21,9 @@
 ## Milestones
 
 ### v0.1
-- interfacciarsi PiFace
-- collegare LED esterno
-- aggiungere stato input digitali a admin console
 
 
 ### v0.2
-- collegare sensore esterno
 
 
 ### v0.x
@@ -50,8 +46,3 @@
 + microfono remoto da polso
 
 
-## Lista spesa
-- jumper wire
-? PCB
-- transistor
-- sensori

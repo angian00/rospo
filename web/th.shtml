@@ -1,0 +1,151 @@
+<!-- TODO: set var -->
+<!--#include virtual="header.html" -->
+<style>
+	#ts {
+		font-style: italic;
+	}
+
+	svg {
+		fill: #fff;
+		stroke: none;
+	}
+
+    .axis path,
+	.axis line {
+	  fill: none;
+	  shape-rendering: crispEdges;
+	}
+
+	.x.axis path {
+	  display: none;
+	}
+
+	.line {
+	  fill: none;
+	  stroke-width: 1.5px;
+	}
+
+</style>
+
+<div>
+	<h1>Temperature-Humidity Monitor</h1>
+
+	<p>Last update: <span id="ts">-</span></p>
+	<div id="svgContainer" />
+
+	<script src="http://d3js.org/d3.v3.js"></script>
+	<script>
+
+		var margin = {top: 30, right: 40, bottom: 30, left: 50},
+		    width = 700 - margin.left - margin.right,
+		    height = 400 - margin.top - margin.bottom;
+
+		var parseDate = d3.time.format("%Y-%m-%d %H:%M:%S").parse;
+
+		var x = d3.time.scale()
+		    .range([0, width]);
+
+		var y0 = d3.scale.linear()
+		    .range([height, 0]);
+
+		var y1 = d3.scale.linear()
+		    .range([height, 0]);
+
+		var xAxis = d3.svg.axis()
+		    .scale(x)
+		    .orient("bottom");
+
+		var yAxisLeft = d3.svg.axis()
+		    .scale(y0)
+		    .orient("left");
+
+		var yAxisRight = d3.svg.axis()
+		    .scale(y1)
+		    .orient("right");
+
+		// var line = d3.svg.line()
+		//     .interpolate("basis")
+		//     .x(function(d) { return x(d.date); })
+		//     .y(function(d) { return y(d.temperature); });
+
+		var lineTemp = d3.svg.line()
+		    .x(function(d) { return x(d.date); })
+		    .y(function(d) { return y0(d.temperature); });
+
+		var lineHum = d3.svg.line()
+		    .x(function(d) { return x(d.date); })
+		    .y(function(d) { return y1(d.humidity); });
+
+		var svg = d3.select("#svgContainer").append("svg")
+		    .attr("width", width + margin.left + margin.right)
+		    .attr("height", height + margin.top + margin.bottom)
+		  .append("g")
+		    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		d3.text("th.dsv", function(text) {
+			var data = d3.dsv("|").parseRows(text).map(function(row) {
+				return { 
+					date: parseDate(row[0]),
+					temperature: +row[1],
+					humidity: +row[2]
+				};
+			});
+
+
+			x.domain(d3.extent(data, function(d) { return d.date; }));
+
+//			y0.domain([0, d3.max(data, function(d) { return Math.max(d.temperature); })]); 
+//			y1.domain([0, d3.max(data, function(d) { return Math.max(d.humidity); })]); 
+			y0.domain([15, 30]); 
+			y1.domain([20, 70]); 
+
+			svg.append("g")
+			  .attr("class", "x axis")
+			  .attr("transform", "translate(0," + height + ")")
+			  .call(xAxis);
+
+			svg.append("g")
+			  .attr("class", "y axis")
+			  .style("fill", "#EB4763")
+			  .call(yAxisLeft)
+			.append("text")
+			  .attr("transform", "rotate(-90)")
+			  .attr("y", 6)
+			  .attr("dy", ".71em")
+			  .style("text-anchor", "end")
+			  .text("Temperature (ºC)");
+
+			svg.append("g")
+			  .attr("class", "y axis")
+			  .attr("transform", "translate(" + width + " ,0)")   
+			  .style("fill", "#A3A3F5")
+			  .call(yAxisRight)
+			.append("text")
+			  .attr("transform", "rotate(-90)")
+			  .attr("y", -26)
+			  .attr("dy", ".71em")
+			  .style("text-anchor", "end")
+			  .text("Relative Humidity (%)");
+
+			svg.append("path")
+		    	.datum(data)
+			    .attr("class", "line")
+			    .attr("d", lineTemp)
+				.style("stroke", "#EB4763");
+
+			svg.append("path")
+		    	.datum(data)
+			    .attr("class", "line")
+			    .attr("d", lineHum)
+				.style("stroke", "#A3A3F5");
+
+
+			var lastDate = data[data.length - 1].date;
+			$("#ts").text(d3.time.format("%Y-%m-%d %H:%M")(lastDate));
+		});
+
+	</script>
+</div>
+
+<!--#include virtual="footer.html" -->
+

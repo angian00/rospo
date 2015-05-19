@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/media/sf_vbox/rospo/sensori/temphum.py", line 3, in <module>
+    import Adafruit_DHT
+ImportError: No module named Adafruit_DHT
